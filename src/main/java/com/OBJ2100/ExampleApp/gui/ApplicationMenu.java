@@ -17,10 +17,6 @@ import com.OBJ2100.ExampleApp.db.DatabaseHelper;
 
 public class ApplicationMenu extends JMenuBar implements ActionListener {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	private JMenu menu_file = null;
 	private JMenuItem dBconnectionItem = null;
 	private JMenuItem exitItem = null;

@@ -14,8 +14,10 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -38,6 +40,7 @@ public class MainContent extends JPanel implements DocumentsManager {
     private JButton displayEmployees = new JButton("Display employees");
     private JButton clear = new JButton("Clear results");
     private JButton storeInFile = new JButton("Store results");
+    private JButton importFromFile = new JButton("Import data");
     private JTextArea results = new JTextArea();
     private JButton updateEmployeeButton = new JButton("Update employee");
     private JButton deleteEmployeeButton = new JButton("Delete employee");
@@ -91,9 +94,6 @@ public class MainContent extends JPanel implements DocumentsManager {
         gbcButton.gridy = 3;
         add(buttonPanel, gbcButton);
         
-        //JButton displayEmployees = new JButton();
-        //displayEmployees.setBounds(0,0,0,500);
-        
         addEmployeeButton.setFont(bigFont);
         gbc.gridx = 5;
         gbc.gridy = 0;
@@ -120,8 +120,7 @@ public class MainContent extends JPanel implements DocumentsManager {
                     List<Employee> employees = dbHelper.getEmployees();
                     results.setText("");
                     for (Employee employee : employees) {
-                        //results.append(employee.getFirstName() + ", " + employee.getLastName() + newline);
-                    	results.append(employee.getFirstName() + "  " + employee.getLastName() + ", id: " + employee.getId() + ", email: " + employee.getEmail() + ", department: " + employee.getDepartment() + ", salary: " + employee.getSalary() + newline);
+                        results.append(employee.getFirstName() + ", " + employee.getLastName() + newline);
                     }
                 } catch (SQLException e1) {
                     displayMessage("Error in fetching employees");
@@ -232,7 +231,7 @@ public class MainContent extends JPanel implements DocumentsManager {
         });
         
 
-        gbcButton.gridy = 10;
+        gbcButton.gridy = 11;
         exitButton.setFont(bigFont);
         buttonPanel.add(exitButton, gbcButton);
         exitButton.addActionListener(new ActionListener() { 
@@ -240,10 +239,49 @@ public class MainContent extends JPanel implements DocumentsManager {
         	    System.exit(0);
         	} 
         });
-	}
-	
-	
-	public String getFirstName() {
+
+        gbcButton.gridy = 10;
+        importFromFile.setFont(bigFont);
+        buttonPanel.add(importFromFile, gbcButton);
+        importFromFile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+                fc.setDialogTitle("Select a file or directory to import");
+
+                // Set default folder
+                fc.setCurrentDirectory(new File("c:\\temp"));
+
+                int returnVal = fc.showOpenDialog(null);
+
+                if (returnVal == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fc.getSelectedFile();
+
+                    if (selectedFile.isDirectory()) {
+                        File[] files = selectedFile.listFiles();
+                        for (File file : files) {
+                            if (file.isFile()) {
+                                try {
+                                    readFromFile(file);
+                                    displayMessage("Imported file: " + file.getName());
+                                } catch (IOException e1) {
+                                    displayMessage("Error reading file: " + file.getName());
+                                }
+                            }
+                        }
+                        displayMessage("Import complete!");
+                    } else if (selectedFile.isFile()) {
+                        try {
+                            readFromFile(selectedFile);
+                            displayMessage("Imported file: " + selectedFile.getName());
+                        } catch (IOException e1) {
+                            displayMessage("Error reading file: " + selectedFile.getName());
+                        }
+                    }
+                }
+            }
+        });       
+        
+	} String getFirstName() {
 		return nameTextField.getText();
 	}
 	
@@ -261,21 +299,72 @@ public class MainContent extends JPanel implements DocumentsManager {
 	
 	// this method overrides the one from the interface
 	// it is not used in this version of the software
-	@Override
+	/*@Override
 	public String readFromFile(File file) throws IOException {
 		// TODO
 		return null;
+	} */
+	public String readFromFile(File file) throws IOException {
+	    try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            String[] values = line.split(",");
+	            
+	            String lastName = "";
+	            String firstName = "";
+	            String email = "";
+	            String department = "";
+	            double salary = 0.0;
+	            
+	            if (values.length >= 1 && !values[0].isEmpty()) {
+	                lastName = values[0].trim();
+	            }
+	            if (values.length >= 2 && !values[1].isEmpty()) {
+	                firstName = values[1].trim();
+	            }
+	            if (values.length >= 3 && !values[2].isEmpty()) {
+	                email = values[2].trim();
+	            }
+	            if (values.length >= 4 && !values[3].isEmpty()) {
+	                department = values[3].trim();
+	            }
+	            if (values.length >= 5 && !values[4].isEmpty()) {
+	                try {
+	                    salary = Double.parseDouble(values[4].trim());
+	                } catch (NumberFormatException e) {
+	                    displayMessage("Invalid salary value: " + values[4]);
+	                    continue;
+	                }
+	            }
+	            
+	            try {
+	                dbHelper.addEmployee(firstName, lastName, department, email, salary);
+	                results.append("Imported: " + line + newline);
+	                System.out.println("Imported: " + line);
+	            } catch (SQLException e) {
+	                results.append("Failed: " + line + newline);
+	                System.out.println("Failed: " + line);
+	            }
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    return null;
 	}
 
 	
 	//method that writes text into the file
 	// this version does not give warning about overwriting the file content
 	@Override
-	public void writeToFile(String text, File file) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-	    writer.write(text);    
-	    writer.close();
-		
-	}
+    public void writeToFile(String text, File file) throws IOException {
+        if (!file.getName().endsWith(".txt")) {
+            file = new File(file.getAbsolutePath() + ".txt");
+        }
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+        writer.write(text);
+        writer.close();
+
+    }
 
 }

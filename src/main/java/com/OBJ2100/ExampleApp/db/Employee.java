@@ -15,11 +15,14 @@ public class Employee {
 		this.salary = salary;
 		this.email = email;
 	}
-	
-	public int getId () {
+
+	public int getId() {
 		return id;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getDepartment() {
 		return department;
 	}

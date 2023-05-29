@@ -116,7 +116,7 @@ public class DatabaseHelper implements DatabaseInterface {
 	    }
 	    
 	    @Override
-	    public void addEmployee(String firstName, String LastName, String department, String email, double salary) throws SQLException{
+	    public void addEmployee(String firstName, String LastName, String email, String department, double salary) throws SQLException{
 	    	try {
 				open();
 	    		prepStmt = conn.prepareStatement(
@@ -164,15 +164,15 @@ public class DatabaseHelper implements DatabaseInterface {
 			
 		}
 	    @Override
-	    public void updateEmployee(String firstName, String lastName, String department, String email, double salary) throws SQLException {
+	    public void updateEmployee(String firstName, String lastName, String email, String department, double salary) throws SQLException {
 	        try {
 	            open();
 	            prepStmt = conn.prepareStatement(
 	                    "UPDATE employees SET department=?, email=?, salary=? WHERE first_name=? AND last_name=?"
 	            );
-	            prepStmt.setString(1, department);
-	            prepStmt.setString(2, email);
-	            prepStmt.setDouble(3, salary);
+	            prepStmt.setString(2, department);
+	            prepStmt.setString(1, email);
+	            prepStmt.setDouble(3, salary); 
 	            prepStmt.setString(4, firstName);
 	            prepStmt.setString(5, lastName);
 
@@ -201,7 +201,7 @@ public class DatabaseHelper implements DatabaseInterface {
 	        }
 	    }
 
-	    public Employee getEmployee(int id, String firstName, String lastName) throws SQLException {
+	    public Employee getEmployee(String firstName, String lastName) throws SQLException {
 	        Employee employee = null;
 	        try {
 	            open();
@@ -214,6 +214,7 @@ public class DatabaseHelper implements DatabaseInterface {
 	            ResultSet resultSet = prepStmt.executeQuery();
 
 	            if (resultSet.next()) {
+	            	int id = rSet.getInt("id");
 	                String department = resultSet.getString("department");
 	                String email = resultSet.getString("email");
 	                double salary = resultSet.getDouble("salary");
