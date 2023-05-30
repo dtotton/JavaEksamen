@@ -118,21 +118,22 @@ public class DatabaseHelper implements DatabaseInterface {
 	    }
 	    
 	    @Override
-	    public void addEmployee(String lastName, String firstName, String extension,String email,String  officeCode,int reportsTo, String jobTitle) throws SQLException{
+	    public void addEmployee(int employeeNumber, String lastName, String firstName, String extension,String email,String  officeCode,int reportsTo, String jobTitle) throws SQLException{
 	    	try {
 				open();
 	    		prepStmt = conn.prepareStatement(
 						"insert into employees " +
-						"(lastName, firstName, extension, email, officeCode, reportsTO, jobTitle) " + 
+						"(employeeNumber, lastName, firstName, extension, email, officeCode, reportsTo, jobTitle) " + 
 						"values " + 
-						"(?, ?, ?, ?, ?)");
-	    		prepStmt.setString(1, lastName);
-	    		prepStmt.setString(2, firstName);
+	    				"(?, ?, ?, ?, ?, ?, ?, ?)");
+	    		prepStmt.setInt(1, employeeNumber);
+	    		prepStmt.setString(2, lastName);
+	    		prepStmt.setString(3, firstName);
 	    		prepStmt.setString(4, extension);
-	    		prepStmt.setString(3, email);
-	    		prepStmt.setString(5, officeCode);
-	    		prepStmt.setInt(6, reportsTo);
-	    		prepStmt.setString(7, jobTitle);
+	    		prepStmt.setString(5, email);
+	    		prepStmt.setString(6, officeCode);
+	    		prepStmt.setInt(7, reportsTo);
+	    		prepStmt.setString(8, jobTitle);
 	    		
 	    		prepStmt.executeUpdate();
 	    		
@@ -167,13 +168,36 @@ public class DatabaseHelper implements DatabaseInterface {
 			// TODO Auto-generated method stub
 			
 		}
+	    @Override
+	    public void updateEmployee(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException {
+	        try {
+	            open();
+	            prepStmt = conn.prepareStatement(
+	                    "UPDATE employees SET extension=?, email=?, officeCode=?, reportsTo=?, jobTitle=? WHERE firstName=? AND lastName=?"
+	            );
+	            
+	            prepStmt.setString(1, extension);
+	            prepStmt.setString(2, email);
+	            prepStmt.setString(3, officeCode); 
+	            prepStmt.setInt(4, reportsTo);
+	            prepStmt.setString(5, jobTitle);
+	            prepStmt.setString(6, firstName);
+	            prepStmt.setString(7, lastName);
+
+	            prepStmt.executeUpdate();
+
+	            close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	  
 	    @Override
 	    public void deleteEmployee(String firstName, String lastName) throws SQLException {
 	        try {
 	            open();
 	            prepStmt = conn.prepareStatement(
-	                    "DELETE FROM employees WHERE first_name=? AND last_name=?"
+	                    "DELETE FROM employees WHERE firstName=? AND lastName=?"
 	            );
 	            prepStmt.setString(1, firstName);
 	            prepStmt.setString(2, lastName);
@@ -191,15 +215,16 @@ public class DatabaseHelper implements DatabaseInterface {
 	        try {
 	            open();
 	            prepStmt = conn.prepareStatement(
-	                    "SELECT * FROM employees WHERE first_name=? AND last_name=?"
+	                    "SELECT * FROM employees WHERE firstName=? AND lastName=?"
 	            );
 	            prepStmt.setString(1, firstName);
 	            prepStmt.setString(2, lastName);
 
+
 	            ResultSet resultSet = prepStmt.executeQuery();
 
 	            if (resultSet.next()) {
-	            	int employeeNumber = rSet.getInt("employeeNumber");
+	            	int employeeNumber = resultSet.getInt("employeeNumber");
 	                String extension = resultSet.getString("extension");
 	                String  email= resultSet.getString("email");
 	                String officeCode = resultSet.getString("officeCode");
@@ -217,12 +242,7 @@ public class DatabaseHelper implements DatabaseInterface {
 	        return employee;
 	    }
 
-		@Override
-		public void updateEmployee(String firstName, String lastName, String extension, String email, String officeCode,
-				int reportsTo, String jobTitle) throws SQLException {
-			// TODO Auto-generated method stub
-			
-		}
+
 
 		
 }

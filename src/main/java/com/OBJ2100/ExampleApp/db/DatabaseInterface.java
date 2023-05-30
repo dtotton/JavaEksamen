@@ -22,10 +22,10 @@ public interface DatabaseInterface {
 	List<Employees> getEmployees() throws SQLException;
 	
 	//add employee with name
-	void addEmployee(String firstName, String lastName) throws SQLException;
+	void addEmployee(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException;
 	
 	//add employee with all details
-	void addEmployee(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException;
+	void addEmployee(int employeeNumber, String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException;
 	
 	//update employee
 	void updateEmployee(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException;
