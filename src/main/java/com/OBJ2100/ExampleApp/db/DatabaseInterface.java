@@ -19,17 +19,17 @@ public interface DatabaseInterface {
 	void test() throws SQLException;
 	
 	// get list of all employees
-	List<Employee> getEmployees() throws SQLException;
+	List<Employees> getEmployees() throws SQLException;
 	
 	//add employee with name
-	void addEmployee(String firstName, String LastName) throws SQLException;
+	void addEmployee(String firstName, String lastName) throws SQLException;
 	
 	//add employee with all details
-	void addEmployee(String firstName, String LastName, String department, String email, double salary) throws SQLException;
+	void addEmployee(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException;
 	
 	//update employee
-	void updateEmployee(String firstName, String LastName, String department, String email, double salary) throws SQLException;
+	void updateEmployee(String firstName, String lastName, String extension, String email, String officeCode, int reportsTo, String jobTitle) throws SQLException;
 	
 	//delete employee
-	void deleteEmployee(String firstName, String LastName) throws SQLException;
+	void deleteEmployee(String firstName, String lastName) throws SQLException;
 }
