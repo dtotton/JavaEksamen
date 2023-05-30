@@ -118,6 +118,67 @@ public class DatabaseHelper implements DatabaseInterface {
 			}
 	    	return null;
 	    }
+
+	    @Override
+	    public List<Offices> getOffices() throws SQLException {    
+	    	ArrayList<Offices> offices = new ArrayList<Offices>();
+	    	this.open();
+	    	try {
+		    	prepStmt = conn.prepareStatement("select * from offices");
+		    	rSet = prepStmt.executeQuery();
+
+		    	while (rSet.next()) {
+		    		String officeCode = rSet.getString("officeCode");
+					String city = rSet.getString("city");
+					String phone = rSet.getString("phone");
+					String addressLine1 = rSet.getString("addressLine1");
+					String addressLine2 = rSet.getString("addressLine2");
+					String state = rSet.getString("state");
+					String country = rSet.getString("country");
+					String postalCode = rSet.getString("postalCode");
+					String territory = rSet.getString("territory");
+					
+					Offices current= new Offices(officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory);
+					offices.add(current);
+				}
+		    	return offices;
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}	    	
+	    	return null;
+	    	
+	    }
+
+	    
+	    @Override
+	    public List<Products> getProducts() throws SQLException {    
+	    	ArrayList<Products> products = new ArrayList<Products>();
+	    	this.open();
+	    	try {
+		    	prepStmt = conn.prepareStatement("select * from products");
+		    	rSet = prepStmt.executeQuery();
+
+		    	while (rSet.next()) {
+		    		String productCode = rSet.getString("productCode");
+		    		String productName = rSet.getString("productName");
+		    		String productLine = rSet.getString("productLine");
+		    		String productScale = rSet.getString("productCode");
+		    		String productVendor = rSet.getString("productVendor");
+		    		String productDescription = rSet.getString("productDescription");
+		    		short quantityInStock = rSet.getShort("quantityInStock");
+		    		BigDecimal buyPrice = rSet.getBigDecimal("buyPrice");
+		    		BigDecimal  MSRP = rSet.getBigDecimal("MSRP");
+					
+		    		Products current= new Products(productCode, productName, productLine, productScale, productVendor, productDescription, quantityInStock, buyPrice, MSRP);
+					products.add(current);
+				}
+		    	return products;
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}	    	
+	    	return null;
+	    }	    
+
 	    
 	    @Override
 	    public void addEmployee(String lastName, String firstName, String extension,String email,String  officeCode,int reportsTo, String jobTitle) throws SQLException{
