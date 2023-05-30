@@ -20,6 +20,12 @@ public interface DatabaseInterface {
 	
 	// get list of all employees
 	List<Employees> getEmployees() throws SQLException;
+
+	// get list of all offices
+	List<Offices> getOffices() throws SQLException;	
+
+	// get list of all products
+	List<Products> getProducts() throws SQLException;
 	
 	//add employee with name
 	void addEmployee(String firstName, String lastName) throws SQLException;
@@ -35,10 +41,13 @@ public interface DatabaseInterface {
 	
 	// get list of all customers by selected city
 	List<Customers> getCustomersByCity(String city) throws SQLException;
+	
 	// get list of all customers by selected state
 	List<Customers> getCustomersByState(String state) throws SQLException;
+	
 	// get list of all cities in the DB
 	List<String> getCities() throws SQLException;
+	
 	// get list of all states in the DB
 	List<String> getStates() throws SQLException;
 }
