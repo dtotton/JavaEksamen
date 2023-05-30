@@ -10,6 +10,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.ButtonGroup;
 import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
 import javax.swing.JList;
@@ -100,7 +101,12 @@ public class MainInterface extends JFrame {
 		menuBar.add(menuHelp);
 		
 		JMenuItem miCall = new JMenuItem("Call Ståle");
-		menuHelp.add(miCall);
+        miCall.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(MainInterface.this, "Calling Ståle.....", "Calling", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        menuHelp.add(miCall);
 		
 		JSeparator separator_4 = new JSeparator();
 		menuHelp.add(separator_4);
@@ -189,6 +195,10 @@ public class MainInterface extends JFrame {
 		rbtState.setBackground(new Color(230, 230, 250));
 		rbtState.setBounds(250, 250, 109, 23);
 		contentPane.add(rbtState);
+		
+		ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(rbtCity);
+        buttonGroup.add(rbtState);
 		
 		JComboBox comboCity = new JComboBox();
 		comboCity.setBackground(new Color(211, 211, 211));
