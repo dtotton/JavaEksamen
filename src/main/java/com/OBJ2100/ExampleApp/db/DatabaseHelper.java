@@ -1,5 +1,7 @@
 package com.OBJ2100.ExampleApp.db;
 
+import java.math.BigDecimal;
+
 /**
 Assuming that you have proper MySQL JDBC driver:
 How to use this class?
@@ -223,6 +225,118 @@ public class DatabaseHelper implements DatabaseInterface {
 			// TODO Auto-generated method stub
 			
 		}
+		/*getCustomersByCity fetches a list of all customers of the inputed city string*/
+		@Override
+		public List<Customers> getCustomersByCity(String cityIn) throws SQLException {
+			ArrayList<Customers> customers = new ArrayList<Customers>();
+	    	this.open();
+	    	try {
+		    	prepStmt = conn.prepareStatement("select * from customers WHERE city=?");
+		    	prepStmt.setString(1, cityIn);
+		    	rSet = prepStmt.executeQuery();
+
+		    	while (rSet.next()) {
+		    		int customerNumber = rSet.getInt("customerNumber");
+					String customerName = rSet.getString("customerName");
+					String contactLastName = rSet.getString("contactLastName");
+					String contactFirstName = rSet.getString("contactFirstname");
+					String phone = rSet.getString("phone");
+					String adressLine1 = rSet.getString("addressLine1");
+					String adressLine2 = rSet.getString("addressLine2");
+					String city = rSet.getString("city");
+					String state = rSet.getString("state");
+					String postalCode = rSet.getString("postalCode");
+					String country = rSet.getString("country");
+					int salesRepEmployeeNumber = rSet.getInt("salesRepEmployeeNumber");
+					BigDecimal creditLimit = rSet.getBigDecimal("creditLimit");
+					
+					Customers current= new Customers(customerNumber, customerName, contactLastName, contactFirstName, phone, adressLine1, adressLine2, city, state, postalCode, country, salesRepEmployeeNumber, creditLimit);
+					customers.add(current);
+				}
+		    	return customers;
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
+	    	return null;
+	    }
+
+		/*getCustomersByState fetches a list of all customers of the inputed state string */
+		@Override
+		public List<Customers> getCustomersByState(String stateIn) throws SQLException {
+			ArrayList<Customers> customers = new ArrayList<Customers>();
+	    	this.open();
+	    	try {
+		    	prepStmt = conn.prepareStatement("select * from customers WHERE state=?");
+		    	prepStmt.setString(1, stateIn);
+		    	rSet = prepStmt.executeQuery();
+
+		    	while (rSet.next()) {
+		    		int customerNumber = rSet.getInt("customerNumber");
+					String customerName = rSet.getString("customerName");
+					String contactLastName = rSet.getString("contactLastName");
+					String contactFirstName = rSet.getString("contactFirstname");
+					String phone = rSet.getString("phone");
+					String adressLine1 = rSet.getString("addressLine1");
+					String adressLine2 = rSet.getString("addressLine2");
+					String city = rSet.getString("city");
+					String state = rSet.getString("state");
+					String postalCode = rSet.getString("postalCode");
+					String country = rSet.getString("country");
+					int salesRepEmployeeNumber = rSet.getInt("salesRepEmployeeNumber");
+					BigDecimal creditLimit = rSet.getBigDecimal("creditLimit");
+					
+					Customers current= new Customers(customerNumber, customerName, contactLastName, contactFirstName, phone, adressLine1, adressLine2, city, state, postalCode, country, salesRepEmployeeNumber, creditLimit);
+					customers.add(current);
+				}
+		    	return customers;
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
+	    	return null;
+		}
+		//Fetches a list of all distinct cities currently in the customers table
+		@Override
+		public List<String> getCities() throws SQLException {
+			ArrayList<String> cities = new ArrayList<String>();
+	    	this.open();
+	    	try {
+		    	prepStmt = conn.prepareStatement("SELECT DISTINCT city FROM customers");
+		    	rSet = prepStmt.executeQuery();
+
+		    	while (rSet.next()) {
+		    		String fetchedCity = rSet.getString("city");
+					cities.add(fetchedCity);
+				}
+		    	return cities;
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
+	    	return null;
+		}
+		//fetches a list of all distinct states currently in the customers table
+		@Override
+		public List<String> getStates() throws SQLException {
+			ArrayList<String> states = new ArrayList<String>();
+	    	this.open();
+	    	try {
+		    	prepStmt = conn.prepareStatement("SELECT DISTINCT state FROM customers");
+		    	rSet = prepStmt.executeQuery();
+
+		    	while (rSet.next()) {
+		    		String fetchedState = rSet.getString("state");
+					if(fetchedState != null) {
+						
+						states.add(fetchedState);
+					}
+		    		
+				}
+		    	return states;
+			} catch (Exception exc) {
+				exc.printStackTrace();
+			}
+	    	return null;
+		}
+		
 
 		
 }

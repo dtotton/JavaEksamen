@@ -32,4 +32,13 @@ public interface DatabaseInterface {
 	
 	//delete employee
 	void deleteEmployee(String firstName, String lastName) throws SQLException;
+	
+	// get list of all customers by selected city
+	List<Customers> getCustomersByCity(String city) throws SQLException;
+	// get list of all customers by selected state
+	List<Customers> getCustomersByState(String state) throws SQLException;
+	// get list of all cities in the DB
+	List<String> getCities() throws SQLException;
+	// get list of all states in the DB
+	List<String> getStates() throws SQLException;
 }
