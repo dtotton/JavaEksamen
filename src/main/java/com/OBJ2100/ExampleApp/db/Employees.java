@@ -1,15 +1,21 @@
+/**
+ * @author Ståle Rivelsrud
+ * @version 1.0
+ */
+
+
 package com.OBJ2100.ExampleApp.db;
 
 public class Employees {
 	private int employeeNumber, reportsTo;
-	private String lastName, firstName, extention, email, officeCode, jobTitle;
+	private String lastName, firstName, extension, email, officeCode, jobTitle;
 	
 	public Employees (int employeeNumber, String lastName, String firstName, String extention, String email, String officeCode, int reportsTo, String jobTitle) {
 		super();
 		this.employeeNumber = employeeNumber;
 		this.lastName = lastName;
 		this.firstName = firstName;
-		this.extention = extention;
+		this.extension = extention;
 		this.email = email;
 		this.officeCode = officeCode;
 		this.reportsTo = reportsTo;
@@ -41,11 +47,11 @@ public class Employees {
 	}
 
 	public String getExtention() {
-		return extention;
+		return extension;
 	}
 
 	public void setExtention(String extention) {
-		this.extention = extention;
+		this.extension = extention;
 	}
 
 	public String getEmail() {

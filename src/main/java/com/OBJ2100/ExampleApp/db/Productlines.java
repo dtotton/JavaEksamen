@@ -1,3 +1,9 @@
+/**
+ * @author Ståle Rivelsrud
+ * @version 1.0
+ */
+
+
 package com.OBJ2100.ExampleApp.db;
 
 public class Productlines {
