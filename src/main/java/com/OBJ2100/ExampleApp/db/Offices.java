@@ -1,4 +1,7 @@
 /**
+ * This class represents the Office entity.
+ * It stores information about offices records.
+ * 
  * @author Ståle Rivelsrud
  * @version 1.0
  */
@@ -8,80 +11,193 @@ package com.OBJ2100.ExampleApp.db;
 
 public class Offices {
 	private String officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory;
+
+    /**
+     * Constructs a Office object.
+     *
+	 * @param officeCode The office code.
+	 * @param city The city where the office is located.
+	 * @param phone The phone number of the office.
+	 * @param addressLine1 The first line of the office address.
+	 * @param addressLine2 The second line of the office address.
+	 * @param state The state where the office is located.
+	 * @param country The country where the office is located.
+	 * @param postalCode The postal code of the office.
+	 * @param territory The territory associated with the office.
+     */		
 	
 	public Offices (String officeCode, String city, String phone, String addressLine1, String addressLine2, String state, String country, String postalCode, String territory) {
-		
+		super();
+        this.officeCode = officeCode;
+        this.city = city;
+        this.phone = phone;
+        this.addressLine1 = addressLine1;
+        this.addressLine2 = addressLine2;
+        this.state = state;
+        this.country = country;
+        this.postalCode = postalCode;
+        this.territory = territory;
 	}
 
-	public String getOfficeCode() {
-		return officeCode;
-	}
+	/**
+     * Retrieves the office code.
+     *
+     * @return The office code.
+     */
+    public String getOfficeCode() {
+        return officeCode;
+    }
 
-	public void setOfficeCode(String officeCode) {
-		this.officeCode = officeCode;
-	}
+    /**
+     * Sets the office code.
+     *
+     * @param officeCode The office code to set.
+     */
+    public void setOfficeCode(String officeCode) {
+        this.officeCode = officeCode;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    /**
+     * Retrieves the city where the office is located.
+     *
+     * @return The city where the office is located.
+     */
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
+    /**
+     * Sets the city where the office is located.
+     *
+     * @param city The city where the office is located to set.
+     */
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-	public String getPhone() {
-		return phone;
-	}
+    /**
+     * Retrieves the phone number of the office.
+     *
+     * @return The phone number of the office.
+     */
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
+    /**
+     * Sets the phone number of the office.
+     *
+     * @param phone The phone number of the office to set.
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public String getAddressLine1() {
-		return addressLine1;
-	}
+    /**
+     * Retrieves the first line of the office address.
+     *
+     * @return The first line of the office address.
+     */
+    public String getAddressLine1() {
+        return addressLine1;
+    }
 
-	public void setAddressLine1(String addressLine1) {
-		this.addressLine1 = addressLine1;
-	}
+    /**
+     * Sets the first line of the office address.
+     *
+     * @param addressLine1 The first line of the office address to set.
+     */
+    public void setAddressLine1(String addressLine1) {
+        this.addressLine1 = addressLine1;
+    }
 
-	public String getAddressLine2() {
-		return addressLine2;
-	}
+    /**
+     * Retrieves the second line of the office address.
+     *
+     * @return The second line of the office address.
+     */
+    public String getAddressLine2() {
+        return addressLine2;
+    }
 
+    /**
+     * Sets the second line of the office address.
+     *
+     * @param addressLine2 The second line of the office address to set.
+     */
 	public void setAddressLine2(String addressLine2) {
 		this.addressLine2 = addressLine2;
 	}
 
-	public String getState() {
-		return state;
-	}
+    /**
+     * Retrieves the state where the office is located.
+     *
+     * @return The state where the office is located.
+     */
+    public String getState() {
+        return state;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    /**
+     * Sets the state where the office is located.
+     *
+     * @param state The state where the office is located to set.
+     */
+    public void setState(String state) {
+        this.state = state;
+    }
 
-	public String getCountry() {
-		return country;
-	}
+    /**
+     * Retrieves the country where the office is located.
+     *
+     * @return The country where the office is located.
+     */
+    public String getCountry() {
+        return country;
+    }
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
+    /**
+     * Sets the country where the office is located.
+     *
+     * @param country The country where the office is located to set.
+     */
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
-	public String getPostalCode() {
-		return postalCode;
-	}
+    /**
+     * Retrieves the postal code of the office.
+     *
+     * @return The postal code of the office.
+     */
+    public String getPostalCode() {
+        return postalCode;
+    }
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
+    /**
+     * Sets the postal code of the office.
+     *
+     * @param postalCode The postal code of the office to set.
+     */
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
 
-	public String getTerritory() {
-		return territory;
-	}
+    /**
+     * Retrieves the territory associated with the office.
+     *
+     * @return The territory associated with the office.
+     */
+    public String getTerritory() {
+        return territory;
+    }
 
-	public void setTerritory(String territory) {
-		this.territory = territory;
-	}
+    /**
+     * Sets the territory associated with the office.
+     *
+     * @param territory The territory associated with the office to set.
+     */
+    public void setTerritory(String territory) {
+        this.territory = territory;
+    }
 }
