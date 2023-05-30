@@ -16,6 +16,8 @@ import javax.swing.JList;
 import javax.swing.JComboBox;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+
 import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JRadioButtonMenuItem;
@@ -55,6 +57,8 @@ public class MainInterface extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1110, 552);
 		
+		
+		// ***MENU BAR***
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		menuBar.setBackground(new Color(176, 196, 222));
@@ -64,40 +68,45 @@ public class MainInterface extends JFrame {
 		menuFile.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
 		menuBar.add(menuFile);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Item 1");
-		menuFile.add(mntmNewMenuItem);
+		JMenuItem mi1 = new JMenuItem("Item 1");
+		menuFile.add(mi1);
 		
 		JSeparator separator_2 = new JSeparator();
 		menuFile.add(separator_2);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Item 2");
-		menuFile.add(mntmNewMenuItem_1);
+		JMenuItem miExit = new JMenuItem("Exit");
+        miExit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dispose(); // Close the JFrame
+            }
+        });
+        menuFile.add(miExit);
 		
-		JMenu mnNewMenu_2 = new JMenu("Database");
-		mnNewMenu_2.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		menuBar.add(mnNewMenu_2);
+		JMenu menuDatabase = new JMenu("Database");
+		menuDatabase.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		menuBar.add(menuDatabase);
 		
-		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Check database connection");
-		mnNewMenu_2.add(mntmNewMenuItem_2);
+		JMenuItem miCheck = new JMenuItem("Check database connection");
+		menuDatabase.add(miCheck);
 		
 		JSeparator separator_3 = new JSeparator();
-		mnNewMenu_2.add(separator_3);
+		menuDatabase.add(separator_3);
 		
-		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Erase Database");
-		mnNewMenu_2.add(mntmNewMenuItem_3);
+		JMenuItem miErase = new JMenuItem("Erase Database");
+		menuDatabase.add(miErase);
 		
-		JMenu mnNewMenu_1 = new JMenu("Help");
-		mnNewMenu_1.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		menuBar.add(mnNewMenu_1);
+		JMenu menuHelp = new JMenu("Help");
+		menuHelp.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
+		menuBar.add(menuHelp);
 		
-		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Call Ståle");
-		mnNewMenu_1.add(mntmNewMenuItem_4);
+		JMenuItem miCall = new JMenuItem("Call Ståle");
+		menuHelp.add(miCall);
 		
 		JSeparator separator_4 = new JSeparator();
-		mnNewMenu_1.add(separator_4);
+		menuHelp.add(separator_4);
 		
-		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Documentation");
-		mnNewMenu_1.add(mntmNewMenuItem_5);
+		JMenuItem miDoc = new JMenuItem("Documentation");
+		menuHelp.add(miDoc);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(230, 230, 250));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -122,12 +131,24 @@ public class MainInterface extends JFrame {
 		contentPane.add(btnExectuteSqlQuery);
 		
 		JButton btAbout = new JButton("About the app");
+		btAbout.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                showAboutDialog(); // Show the about dialog
+            }
+        });
 		btAbout.setBackground(new Color(176, 196, 222));
 		btAbout.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btAbout.setBounds(10, 113, 200, 35);
 		contentPane.add(btAbout);
 		
+		
+		// Exit App button
 		JButton btnExitApp = new JButton("Exit app");
+		 btnExitApp.addActionListener(new ActionListener() {
+	            public void actionPerformed(ActionEvent e) {
+	                dispose(); // Close the JFrame
+	            }
+	        });
 		btnExitApp.setBackground(new Color(176, 196, 222));
 		btnExitApp.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btnExitApp.setBounds(10, 439, 200, 35);
@@ -234,6 +255,12 @@ public class MainInterface extends JFrame {
 		JLabel lblListCustomers = new JLabel("List customers");
 		lblListCustomers.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblListCustomers.setBounds(241, 164, 200, 40);
-		contentPane.add(lblListCustomers);
+		contentPane.add(lblListCustomers);	
+		
 	}
+	
+	private void showAboutDialog() {
+        String message = "This is a sample application.\nVersion: 1.0\nAuthor: Your Name";
+        JOptionPane.showMessageDialog(this, message, "About", JOptionPane.INFORMATION_MESSAGE);
+    }
 }
