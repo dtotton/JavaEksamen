@@ -23,8 +23,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JScrollPane;
-import com.OBJ2100.ExampleApp.db.DatabaseHelper;
-import com.OBJ2100.ExampleApp.db.Employee;
+import com.OBJ2100.ExampleApp.db.*;
 import com.OBJ2100.ExampleApp.documents.DocumentsManager;
 
 public class MainContent extends JPanel implements DocumentsManager {
@@ -117,9 +116,9 @@ public class MainContent extends JPanel implements DocumentsManager {
         displayEmployees.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    List<Employee> employees = dbHelper.getEmployees();
+                    List<Employees> employees = dbHelper.getEmployees();
                     results.setText("");
-                    for (Employee employee : employees) {
+                    for (Employees employee : employees) {
                         results.append(employee.getFirstName() + ", " + employee.getLastName() + newline);
                     }
                 } catch (SQLException e1) {
@@ -148,7 +147,7 @@ public class MainContent extends JPanel implements DocumentsManager {
                 String lastName = getLastName();
 
                 try {
-                    Employee employee = dbHelper.getEmployee(firstName, lastName);
+                    Employees employee = dbHelper.getEmployee(firstName, lastName);
                     if (employee != null) {
                         // Show a dialog to enter the updated employee information
                         String newDepartment = JOptionPane.showInputDialog("Enter new department:");
@@ -177,7 +176,7 @@ public class MainContent extends JPanel implements DocumentsManager {
                 String lastName = getLastName();
 
                 try {
-                    Employee employee = dbHelper.getEmployee(firstName, lastName);
+                    Employees employee = dbHelper.getEmployee(firstName, lastName);
                     if (employee != null) {
                         int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this employee?");
                         if (confirm == JOptionPane.YES_OPTION) {

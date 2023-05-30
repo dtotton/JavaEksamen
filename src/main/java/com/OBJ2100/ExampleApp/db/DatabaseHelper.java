@@ -62,8 +62,8 @@ public class DatabaseHelper implements DatabaseInterface {
 	    }
 	    
 	    
-	    public List<Employee> getEmployees(double minSalary, String department) throws SQLException{
-	    	ArrayList<Employee> employees = new ArrayList<Employee>();
+	  /*  public List<Employees> getEmployees(double minSalary, String department) throws SQLException{
+	    	ArrayList<Employees> employees = new ArrayList<Employees>();
 	    	this.open();
 	    	try {
 		    	prepStmt = conn.prepareStatement("select * from employees where salary > ? and department=?");
@@ -72,14 +72,14 @@ public class DatabaseHelper implements DatabaseInterface {
 
 		    	rSet = prepStmt.executeQuery();
 		    	while (rSet.next()) {
-		    		int id = rSet.getInt("id");
+		    		int employeeNumber = rSet.getInt("employeeNumber");
 					String firstName = rSet.getString("first_name");
 					String lastName = rSet.getString("last_name");
 					String email = rSet.getString("email");
 					double salary = rSet.getDouble("salary");
 //					String department = rSet.getString("department");
 					
-					Employee newEmployee = new Employee(id, firstName, lastName, department, salary, email);
+					Employees newEmployee = new Employees(employeeNumber, firstName, lastName, department, salary, email);
 					employees.add(newEmployee);
 				}
 		    	return employees;
@@ -87,25 +87,27 @@ public class DatabaseHelper implements DatabaseInterface {
 				exc.printStackTrace();
 			}
 	    	return null;
-	    }
+	    }*/
 	   
 	    @Override
-	    public List<Employee> getEmployees() throws SQLException{
-	    	ArrayList<Employee> employees = new ArrayList<Employee>();
+	    public List<Employees> getEmployees() throws SQLException{
+	    	ArrayList<Employees> employees = new ArrayList<Employees>();
 	    	this.open();
 	    	try {
 		    	prepStmt = conn.prepareStatement("select * from employees");
 		    	rSet = prepStmt.executeQuery();
 
 		    	while (rSet.next()) {
-		    		int id = rSet.getInt("id");
-					String firstName = rSet.getString("first_name");
-					String lastName = rSet.getString("last_name");
+		    		int employeeNumber = rSet.getInt("employeeNumber");
+					String firstName = rSet.getString("firstName");
+					String lastName = rSet.getString("lastName");
+					String extension = rSet.getString("extension");
 					String email = rSet.getString("email");
-					double salary = rSet.getDouble("salary");
-					String department = rSet.getString("department");
+					String officeCode = rSet.getString("officeCode");
+					int reportsTo = rSet.getInt("reportsTo");
+					String jobTitle = rSet.getString("jobTitle");
 					
-					Employee current= new Employee(id, firstName, lastName, department, salary, email);
+					Employees current= new Employees(employeeNumber, firstName, lastName, extension, email, officeCode, reportsTo, jobTitle);
 					employees.add(current);
 				}
 		    	return employees;
@@ -116,19 +118,21 @@ public class DatabaseHelper implements DatabaseInterface {
 	    }
 	    
 	    @Override
-	    public void addEmployee(String firstName, String LastName, String email, String department, double salary) throws SQLException{
+	    public void addEmployee(String lastName, String firstName, String extension,String email,String  officeCode,int reportsTo, String jobTitle) throws SQLException{
 	    	try {
 				open();
 	    		prepStmt = conn.prepareStatement(
 						"insert into employees " +
-						"(first_name, last_name, department, email, salary) " + 
+						"(lastName, firstName, extension, email, officeCode, reportsTO, jobTitle) " + 
 						"values " + 
 						"(?, ?, ?, ?, ?)");
-	    		prepStmt.setString(1, firstName);
-	    		prepStmt.setString(2, LastName);
-	    		prepStmt.setString(4, department);
+	    		prepStmt.setString(1, lastName);
+	    		prepStmt.setString(2, firstName);
+	    		prepStmt.setString(4, extension);
 	    		prepStmt.setString(3, email);
-	    		prepStmt.setDouble(5, salary);
+	    		prepStmt.setString(5, officeCode);
+	    		prepStmt.setInt(6, reportsTo);
+	    		prepStmt.setString(7, jobTitle);
 	    		
 	    		prepStmt.executeUpdate();
 	    		
@@ -149,7 +153,7 @@ public class DatabaseHelper implements DatabaseInterface {
 	            //STEP 5: Extract data from result set
 	            while(rs.next()){
 	                //Display values
-	            	System.out.println(rs.getString("first_name") + ", " + rs.getString("last_name"));
+	            	System.out.println(rs.getString("firstName") + ", " + rs.getString("lastName"));
 	            }
 	            //STEP 6: Clean-up environment
 	            rs.close();
@@ -159,30 +163,11 @@ public class DatabaseHelper implements DatabaseInterface {
 	    }
 
 		@Override
-		public void addEmployee(String firtsName, String LastName) throws SQLException {
+		public void addEmployee(String firstName, String LastName) throws SQLException {
 			// TODO Auto-generated method stub
 			
 		}
-	    @Override
-	    public void updateEmployee(String firstName, String lastName, String email, String department, double salary) throws SQLException {
-	        try {
-	            open();
-	            prepStmt = conn.prepareStatement(
-	                    "UPDATE employees SET department=?, email=?, salary=? WHERE first_name=? AND last_name=?"
-	            );
-	            prepStmt.setString(2, department);
-	            prepStmt.setString(1, email);
-	            prepStmt.setDouble(3, salary); 
-	            prepStmt.setString(4, firstName);
-	            prepStmt.setString(5, lastName);
-
-	            prepStmt.executeUpdate();
-
-	            close();
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
+	  
 	    @Override
 	    public void deleteEmployee(String firstName, String lastName) throws SQLException {
 	        try {
@@ -201,8 +186,8 @@ public class DatabaseHelper implements DatabaseInterface {
 	        }
 	    }
 
-	    public Employee getEmployee(String firstName, String lastName) throws SQLException {
-	        Employee employee = null;
+	    public Employees getEmployee(String firstName, String lastName) throws SQLException {
+	        Employees employee = null;
 	        try {
 	            open();
 	            prepStmt = conn.prepareStatement(
@@ -214,12 +199,14 @@ public class DatabaseHelper implements DatabaseInterface {
 	            ResultSet resultSet = prepStmt.executeQuery();
 
 	            if (resultSet.next()) {
-	            	int id = rSet.getInt("id");
-	                String department = resultSet.getString("department");
-	                String email = resultSet.getString("email");
-	                double salary = resultSet.getDouble("salary");
+	            	int employeeNumber = rSet.getInt("employeeNumber");
+	                String extension = resultSet.getString("extension");
+	                String  email= resultSet.getString("email");
+	                String officeCode = resultSet.getString("officeCode");
+	                int reportsTo = resultSet.getInt("reportsTo");
+	                String jobTitle = resultSet.getString("jobTitle");
 
-	                employee = new Employee(id, firstName, lastName, department, salary, email);
+	                employee = new Employees(employeeNumber, lastName, firstName, extension,  email,  officeCode, reportsTo, jobTitle);
 	            }
 
 	            close();
@@ -229,4 +216,13 @@ public class DatabaseHelper implements DatabaseInterface {
 
 	        return employee;
 	    }
+
+		@Override
+		public void updateEmployee(String firstName, String lastName, String extension, String email, String officeCode,
+				int reportsTo, String jobTitle) throws SQLException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		
 }
