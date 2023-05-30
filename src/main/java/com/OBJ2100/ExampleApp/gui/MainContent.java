@@ -230,16 +230,6 @@ public class MainContent extends JPanel implements DocumentsManager {
         	} 
         });
         
-
-        gbcButton.gridy = 11;
-        exitButton.setFont(bigFont);
-        buttonPanel.add(exitButton, gbcButton);
-        exitButton.addActionListener(new ActionListener() { 
-        	public void actionPerformed(ActionEvent e) { 
-        	    System.exit(0);
-        	} 
-        });
-
         gbcButton.gridy = 10;
         importFromFile.setFont(bigFont);
         buttonPanel.add(importFromFile, gbcButton);
@@ -280,6 +270,16 @@ public class MainContent extends JPanel implements DocumentsManager {
                 }
             }
         });       
+
+
+        gbcButton.gridy = 11;
+        exitButton.setFont(bigFont);
+        buttonPanel.add(exitButton, gbcButton);
+        exitButton.addActionListener(new ActionListener() { 
+        	public void actionPerformed(ActionEvent e) { 
+        	    System.exit(0);
+        	} 
+        });        
         
 	} String getFirstName() {
 		return nameTextField.getText();
