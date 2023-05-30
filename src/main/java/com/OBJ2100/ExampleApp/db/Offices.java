@@ -1,3 +1,4 @@
+package com.OBJ2100.ExampleApp.db;
 
 public class Offices {
 	private String officeCode, city, phone, addressLine1, addressLine2, state, country, postalCode, territory;

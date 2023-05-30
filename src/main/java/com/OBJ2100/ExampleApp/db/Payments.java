@@ -1,3 +1,4 @@
+package com.OBJ2100.ExampleApp.db;
 import java.math.BigDecimal;
 import java.sql.Date;
 

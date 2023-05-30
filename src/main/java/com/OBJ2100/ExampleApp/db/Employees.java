@@ -1,3 +1,4 @@
+package com.OBJ2100.ExampleApp.db;
 
 public class Employees {
 	private int employeeNumber, reportsTo;
