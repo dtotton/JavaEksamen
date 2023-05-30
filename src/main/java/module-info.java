@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author dtott
- *
- */
-module ExampleApp {
-}
